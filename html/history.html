@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History | VoiceIT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/records.css"> 
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../html/user.html">VoiceIt</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../html/report.html">Submit a Report</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../html/history.html">History</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../html/user.html">View Profile</a></li>
+                            <li><a class="dropdown-item" href="../index.html" onclick="logout()">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>    
+
+    <div class="container mt-5 pt-5">
+        <h3>All Submitted Reports</h3>
+        <div id="notifList" class="report-container mt-4"></div>
+    </div>
+
+    <div id="reportPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-box">    
+            <h5 class="mb-3">Report Details</h5>
+            <p><strong>Subject:</strong> <span id="popupSubject"></span></p>
+            <p><strong>Description:</strong> <span id="popupDescription"></span></p>
+            <p><strong>Date:</strong> <span id="popupDate"></span></p>
+            <button onclick="closeReportPopup()" class="btn btn-dark mt-3">Close</button>
+        </div>
+    </div>
+
+    <script>
+        if (!sessionStorage.getItem("loggedIn")) {
+            localStorage.removeItem("reports");
+        }
+
+        function loadReports() {
+            const reports = JSON.parse(localStorage.getItem("reports")) || [];
+            const notifList = document.getElementById("notifList");
+            notifList.innerHTML = "";
+
+            reports.forEach((report, index) => {
+                const box = document.createElement("div");
+                box.classList.add("report-box");
+                box.setAttribute("data-index", index);
+                box.innerHTML = `
+                    <div class="report-title">${report.subject}</div>
+                    <div class="report-desc">${report.description}</div>
+                    <div class="report-date">${report.date}</div>
+                `;
+                box.addEventListener("click", () => showReportPopup(report));
+                notifList.appendChild(box);
+            });
+        }
+
+        function showReportPopup(report) {
+            document.getElementById("popupSubject").textContent = report.subject;
+            document.getElementById("popupDescription").textContent = report.description;
+            document.getElementById("popupDate").textContent = report.date;
+            document.getElementById("reportPopup").style.display = "flex";
+        }
+
+        function closeReportPopup() {
+            document.getElementById("reportPopup").style.display = "none";
+        }
+
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+        }
+
+        window.addEventListener("load", loadReports);
+        sessionStorage.setItem("loggedIn", "true");
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

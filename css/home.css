@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.hero {
+  position: relative;
+  background: url('../images/IMG_2855.jpeg') no-repeat center center/cover;
+  height: 100vh;
+  padding: 0 15px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.navbar {
+  z-index: 3;
+}
+
+.navbar-brand {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  color: white !important;
+  margin-left: 3rem;
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Libre Baskerville', serif;
+  color: white !important;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-right: 2rem;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: goldenrod;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .navbar-collapse {
+    justify-content: center;
+  }
+}
+
+.navbar .col-3.col-md-2 {
+  margin-left: -150px;
+}
+
+.fade-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1%; 
+}
+
+.small-welcome {
+  font-size: 1.5rem;
+  margin: 0;
+  font-family: 'Libre Baskerville', serif;
+}
+
+.welcome-container h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 7rem;
+  letter-spacing: 10px;
+  margin: 0; 
+}
+
+.description-text {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 17px !important;
+  font-family: 'Libre Baskerville', serif;
+  text-align: center;
+}
+.btn-get-started {
+  font-family: 'Playfair Display', serif !important;
+}
+.col-md-6 h2 {
+  font-family: 'Cinzel', serif;
+  font-weight: 900; 
+  font-size: 3rem !important;
+}
+.col-md-6 p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem !important;
+}
+.complaint-heading {
+  font-family: 'Libre Baskerville', serif; 
+  font-weight: 900;
+  margin-bottom: 10px; 
+}
+
+.complaint-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+}
+
+.create-account-btn {
+  font-family: 'Libre Baskerville', serif !important; 
+}
+
+
+
+

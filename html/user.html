@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Profile | VoiceIT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/userintface.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../html/index.html">VoiceIt</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../html/report.html">Submit a Report</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../html/history.html">History</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../html/user.html">View Profile</a></li>
+                            <li><a class="dropdown-item" href="../index.html">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>    
+
+    <div class="container mt-5">
+        <div class="user-header d-flex flex-column align-items-center justify-content-center">
+            <div class="cover-image">
+                <div class="user-greeting text-center">
+                    <h1>Hello!</h1>
+                    <p class="user-details">Welcome back to your profile.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-6">
+                <div class="recent-reports">
+                    <h3>Recent Reports</h3>
+                    <div id="recentReports"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="progress-status">
+                    <h3>Status Progress</h3>
+                    <div class="progress-bar-wrapper">
+                        <div class="mb-3">
+                            <label>Submitted</label>
+                            <div class="progress">
+                                <div class="progress-bar" id="submittedBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Pending</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" id="pendingBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Resolved</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" id="resolvedBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Declined</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" id="declinedBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const recentReportsContainer = document.getElementById('recentReports');
+
+        function loadReports() {
+            const reports = (JSON.parse(localStorage.getItem('reports')) || []).map(report => ({
+                ...report,
+                status: report.status || 'Submitted'
+            }));
+
+            const recent = reports.slice(-3).reverse();
+            recentReportsContainer.innerHTML = recent.map(report => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="report-box">
+                            <div class="subject-box"><strong>Subject:</strong> ${report.subject}</div>
+                            <div class="description-box"><strong>Description:</strong> ${report.description}</div>
+                            <div class="status-box mt-2">
+                                <span class="badge ${getBadgeClass(report.status)}">${report.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateProgress(reports);
+        }
+
+        function getBadgeClass(status) {
+            switch(status.toLowerCase()) {
+                case 'resolved': return 'bg-success';
+                case 'pending': return 'bg-warning';
+                case 'declined': return 'bg-danger';
+                case 'submitted': return 'bg-primary';
+                default: return 'bg-secondary';
+            }
+        }
+
+        function updateProgress(reports) {
+            const total = reports.length || 1;
+            const count = type => reports.filter(r => (r.status || 'submitted').toLowerCase() === type).length;
+
+            document.getElementById('submittedBar').style.width = `${(count('submitted') / total) * 100}%`;
+            document.getElementById('pendingBar').style.width = `${(count('pending') / total) * 100}%`;
+            document.getElementById('resolvedBar').style.width = `${(count('resolved') / total) * 100}%`;
+            document.getElementById('declinedBar').style.width = `${(count('declined') / total) * 100}%`;
+        }
+
+        window.addEventListener('load', loadReports);
+    </script>
+</body>
+</html>

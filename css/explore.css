@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.navbar {
+  z-index: 3;
+}
+
+.navbar-brand {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  color: white !important;
+  margin-left: 3rem;
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Libre Baskerville', serif;
+  color: white !important;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-right: 2rem;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: goldenrod;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .navbar-collapse {
+    justify-content: center;
+  }
+}
+
+.navbar .col-3.col-md-2 {
+  margin-left: -150px;
+}
+
+.fade-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.main-interface {
+  height: 100vh;
+  padding: 100px 0;
+}
+
+.img-1, .img-2, .img-3 {
+  width: 200px;
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.img-1 {
+  top: 0;
+  left: 30px;
+  z-index: 3;
+}
+
+.img-2 {
+  top: 30px;
+  left: 70px;
+  z-index: 2;
+}
+
+.img-3 {
+  top: 60px;
+  left: 110px;
+  z-index: 1;
+}
+
+.features-section {
+  background: goldenrod;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0;
+}
+
+.feature-box {
+  background: white;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+}
+
+.feature-box i {
+  font-size: 3rem;
+  color: #ffc107;
+  margin-bottom: 20px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+.col-md-6 h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 5rem;
+}
+
+.col-md-6 p {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem !important;
+}
+.feature-box h4 {
+  font-family: 'Cinzel', serif;
+  font-weight: 900 !important;
+}
+
+.feature-box p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
